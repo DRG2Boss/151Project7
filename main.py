@@ -12,33 +12,37 @@ def calc_inflation(initial_bal, interest_rate, years_to_go):
     return calc_inflation(interest, interest_rate, years_to_go - 1)
 
 
-# Two seperate functions needed in order to properly reverse a .txt list. The first portion will isolate the data the
+# Two seperate functions used in order to reverse a .txt list. The first portion will isolate the data the
 # user specified in the While loop and save it as a list.
-def load_data(txt_file, split_character):
+def load_data(txt_file):
     file = open(txt_file, 'r')
     all_lines = file.readlines()
     object_list = []
     for line in all_lines:
-        data = line.split(split_character)
-        object_list.append(data)
+        object_list.append(line)
     reversed_list = list_reversal(object_list)
+    # After returning from list_reversal, we need to print the newly reversed list to the user.
+    print(reversed_list)
     return reversed_list
 
 
-# Now we will use a recursion function to properly reverse this list. We'll start with the Base Case.
+# Now we will use a recursion function to properly reverse this list.
 def list_reversal(normal_list):
+    # Base Case
     if len(normal_list) == 0:
-        print(normal_list)
-        return normal_list
-# And finally our Recursive Case.
-    return normal_list[-1:] + list_reversal(normal_list[:-1])
+        return []
+    # Recursive Case
+    return [normal_list[-1]] + list_reversal(normal_list[:-1])
 
 
+# The right-hand triangle function is next.
 def create_triangle(size):
+    # Base Case
     if size <= 0:
-        print("This integer is too small to create a right triangle.")
         return size
-    return
+    # Recursive Case
+    print("#" * size)
+    return create_triangle(size - 1)
 
 
 # A While loop is used here to ensure that the user is always brought back to this central command line menu until
@@ -58,10 +62,9 @@ while True:
         answer = calc_inflation(user_bal, user_rate, user_years)
     elif answer == '2':
         user_file = input("What is the name of your text file (please include the .txt extension)? ")
-        user_split = input("What character would you like to use to split the file? ")
-        answer = load_data(user_file, user_split)
+        answer = load_data(user_file)
     elif answer == '3':
-        user_triangle_size = int(input("How large would you like the right triangle to be?"))
+        user_triangle_size = int(input("How large would you like the right triangle to be? "))
         answer = create_triangle(user_triangle_size)
     elif answer == '4':
         exit(0)
